@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.blogdao">
+    <select id="selectblog" resultType="blog">
+        SELECT *
+        FROM blog
+        ORDER by id DESC
+    </select>
+    <select id="selectblog2" resultType="blog">
+        SELECT *
+        FROM blog
+        ORDER by readnum DESC
+    </select>
+    <select id="selectbyid" parameterType="int" resultType="blog">
+          SELECT *
+          FROM blog
+          WHERE id=#{id}
+    </select>
+    <select id="selectcount" resultType="int">
+       SELECT count(id)
+       FROM blog
+    </select>
+
+    <update id="updateblog" parameterType="blog">
+        update blog set comment=#{comment}
+        WHERE id=#{id}
+    </update>
+    <!--按日志分类-->
+    <select id="selectcategory" resultType="String">
+        SELECT DISTINCT category
+        FROM blog
+    </select>
+    <!--按日志日期-->
+    <select id="selectrtime" resultType="String">
+        select DISTINCT substring(rtime,1,10)
+        FROM blog
+    </select>
+    <!--写博客-->
+    <insert id="insertblog" parameterType="blog">
+        insert INTO blog(title,edit,rtime,category,content,keyword)
+        VALUES (#{title},#{edit},#{rtime},#{category},#{content},#{keyword});
+    </insert>
+</mapper>
